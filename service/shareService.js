@@ -1,0 +1,82 @@
+let hospitalDao = require('../dao/hospitalDao')
+let doctorDao = require('../dao/doctorDao')
+let customExecute = require('../dao/customExecute')
+
+module.exports = {
+    children:{
+        'hospital-list':{
+            handle:(req,resp)=>{
+                hospitalDao.query(null,(err,result)=>{
+                    if(err){
+                        resp.send({
+                            success:false,
+                            err:'医院列表查询失败'
+                        })
+                    }
+                    else{
+                        resp.send({
+                            success:true,
+                            entity:result
+                        })
+                    }
+                })
+            }
+        },
+        'doctor-list':{
+            handle:(req,resp)=>{
+                doctorDao.query(null,(err,result)=>{
+                    if(err){
+                        resp.send({
+                            success:false,
+                            err:'医生列表查询失败'
+                        })
+                    }
+                    else{
+                        resp.send({
+                            success:true,
+                            entity:result
+                        })
+                    }
+                })
+            }
+        },
+        'doctor-hospital':{
+            handle:(req,resp)=>{
+                customExecute(`select d.id as id,d.name as name,d.phone as phone,h.name as hospital from doctor d inner join hospital h on d.hospitalId = h.id`,null,(err,result)=>{
+                    if(err){
+                        resp.send({
+                            success:false,
+                            err:'查询医生数据失败'
+                        })
+                    }
+                    else{
+                        resp.send({
+                            success:true,
+                            entity:result
+                        })
+                    }
+                })
+            }
+        },
+        'doctor-by-hospital':{
+            handle:(req,resp)=>{
+                let doctor = req.query
+                doctorDao.query(doctor,(err,result)=>{
+                    if(err){
+                        console.log(err)
+                        resp.send({
+                            success:false,
+                            err:'获取医生列表失败'
+                        })
+                    }
+                    else{
+                        resp.send({
+                            success:true,
+                            entity:result
+                        })
+                    }
+                })
+            }
+        }
+    }
+}

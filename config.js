@@ -1,0 +1,19 @@
+module.exports = {
+    global:{
+        db:{
+            host:'localhost',
+            port:3306,
+            user:'root',
+            password:'root',
+            dbname:'lfhsystem',
+            characterEncoding:'utf8',
+            serverTimezone:'UTC',
+            maxConnCount:5,
+            minConnCount:2,
+            oriConnCount:3
+        },
+        server:{
+            port:9099
+        }
+    }
+}

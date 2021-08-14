@@ -1,0 +1,82 @@
+let appointmentDao = require('../dao/appointmentDao')
+
+module.exports = {
+    children:{
+        'query':{
+            handle:(req,resp)=>{
+                appointmentDao.query(null,(err,result)=>{
+                    if(err){
+                        resp.send({
+                            success:false,
+                            err:'查询失败'
+                        })
+                    }
+                    else{
+                        resp.send({
+                            success:true,
+                            entity:result
+                        })
+                    }
+                })
+            }
+        },
+        'update':{
+            handle:(req,resp)=>{
+                let appointment = req.body
+                appointmentDao.update(appointment,(err,result)=>{
+                    if(err){
+                        resp.send({
+                            success:false,
+                            err:'更新失败'
+                        })
+                    }
+                    else{
+                        resp.send({
+                            success:true,
+                            entity:result
+                        })
+                    }
+                })
+            }
+        },
+        'delete':{
+            handle:(req,resp)=>{
+                let appointment = req.body
+                console.log('appointment:',appointment)
+                appointmentDao.delete(appointment,(err,result)=>{
+                    if(err){
+                        resp.send({
+                            success:false,
+                            err:'删除失败'
+                        })
+                    }
+                    else{
+                        resp.send({
+                            success:true,
+                            entity:result
+                        })
+                    }
+                })
+            }
+        },
+        'insert':{
+            handle:(req,resp)=>{
+                let appointment = req.body
+                appointmentDao.insert(appointment,(err,result)=>{
+                    if(err){
+                        resp.send({
+                            success:false,
+                            err:'添加失败'
+                        })
+                    }
+                    else{
+                        resp.send({
+                            success:true,
+                            entity:result
+                        })
+                    }
+                })
+            }
+        }
+    }
+}

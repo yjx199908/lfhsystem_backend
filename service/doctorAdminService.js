@@ -1,0 +1,81 @@
+let doctorDao = require('../dao/doctorDao')
+
+module.exports = {
+    children:{
+        'query':{
+            handle:(req,resp)=>{
+                doctorDao.query(null,(err,result)=>{
+                    if(err){
+                        resp.send({
+                            success:false,
+                            err:'查询失败'
+                        })
+                    }
+                    else{
+                        resp.send({
+                            success:true,
+                            entity:result
+                        })
+                    }
+                })
+            }
+        },
+        'update':{
+            handle:(req,resp)=>{
+                let doctor = req.body
+                doctorDao.update(doctor,(err,result)=>{
+                    if(err){
+                        resp.send({
+                            success:false,
+                            err:'更新失败'
+                        })
+                    }
+                    else{
+                        resp.send({
+                            success:true,
+                            entity:result
+                        })
+                    }
+                })
+            }
+        },
+        'delete':{
+            handle:(req,resp)=>{
+                let doctor = req.body
+                doctorDao.delete(doctor,(err,result)=>{
+                    if(err){
+                        resp.send({
+                            success:false,
+                            err:'删除失败'
+                        })
+                    }
+                    else{
+                        resp.send({
+                            success:true,
+                            entity:result
+                        })
+                    }
+                })
+            }
+        },
+        'insert':{
+            handle:(req,resp)=>{
+                let doctor = req.body
+                doctorDao.insert(doctor,(err,result)=>{
+                    if(err){
+                        resp.send({
+                            success:false,
+                            err:'添加失败'
+                        })
+                    }
+                    else{
+                        resp.send({
+                            success:true,
+                            entity:result
+                        })
+                    }
+                })
+            }
+        }
+    }
+}
